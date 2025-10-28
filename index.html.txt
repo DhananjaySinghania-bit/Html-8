@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhananjay - Personal Website</title>
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+<style>
+:root{
+  --blue1:#1e90ff; 
+  --blue2:#00bfff; 
+  --accent:#00bfa5; 
+  --text:#222;
+  --note-red: #ff3333;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Roboto',sans-serif;}
+body{background:#000; color:var(--text); overflow-x:hidden;}
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
+#splash{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:#fff;font-weight:700;font-size:3rem;z-index:9999;text-align:center;
+  animation: glowPulse 1.8s ease-in-out infinite alternate;
+}
+#splash .sub{font-weight:400;font-size:1.4rem;margin-top:0.5rem;opacity:.95; color:#0ff;}
+@keyframes glowPulse{
+  0%{text-shadow:0 0 10px #0ff,0 0 20px #0ff,0 0 30px #00f;}
+  100%{text-shadow:0 0 25px #0ff,0 0 50px #00f,0 0 75px #0ff;}
+}
+header{
+  background:linear-gradient(90deg,var(--blue1),var(--blue2));
+  color:#fff;padding:50px 20px;text-align:center;
+  box-shadow:0 6px 20px rgba(0,0,0,.3);
+  opacity:0; transform:translateY(30px); transition:all .6s ease;
+  border-radius:8px;
+}
+header.visible{opacity:1; transform:none;}
+header h1{
+  font-size:3rem;
+  letter-spacing:2px;
+  color:#0ff;
+  text-shadow:0 0 10px #0ff,0 0 20px #00f;
+  animation: glowText 2s infinite alternate;
+}
+header p{
+  margin-top:10px;
+  color:#f0f8ff;
+  white-space:nowrap;
+  font-size:1.2rem;
+}
+@keyframes glowText{
+  0%{text-shadow:0 0 10px #0ff,0 0 20px #00f;}
+  100%{text-shadow:0 0 25px #0ff,0 0 50px #00f;}
+}
+main{max-width:1000px;margin:30px auto;padding:0 20px;}
+section{padding:50px 0;text-align:center;opacity:0;transform:translateY(40px);transition:all .7s ease;}
+section.visible{opacity:1;transform:none;}
+section h2{color:var(--blue1);margin-bottom:20px;font-size:2rem;}
+.avatar-wrap{width:180px;height:180px;margin:0 auto 20px;perspective:1200px;}
+.flip-card{width:100%;height:100%;position:relative;}
+.flip-inner{
+  width:100%;height:100%;position:relative;
+  transform-style:preserve-3d;
+  transition:transform .9s cubic-bezier(.2,.9,.3,1);
+}
+.flip-inner.flipped{ transform: rotateY(180deg); }
+.flip-inner .front,
+.flip-inner .back{
+  width:100%;height:100%;border-radius:50%;object-fit:cover;
+  border:4px solid var(--blue1);display:block;
+  backface-visibility:hidden;position:absolute;left:0;top:0;
+  transition:transform .5s, box-shadow .5s;
+  transform-style: preserve-3d;
+}
+.flip-inner .front{ z-index:2; }
+.flip-inner .back{ transform: rotateY(180deg); z-index:1; }
+.flip-inner .front:hover,
+.flip-inner .back:hover{
+  transform: scale(1.1) rotateY(15deg);
+  box-shadow:0 14px 35px rgba(0,255,255,.25);
+}
+.stack{display:flex;flex-direction:column;align-items:center;gap:16px;perspective:1000px;}
+.card{
+  width:280px;
+  background:linear-gradient(135deg,#111,#111f1f);
+  padding:20px;border-radius:14px;
+  box-shadow:0 8px 28px rgba(0,255,255,.1);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:1.15rem;color:#fff;
+  transition:all .35s;transform-style:preserve-3d;cursor:pointer;
+}
+.card i{font-size:1.3rem;color:#0ff;margin-bottom:10px;}
+.card:hover{
+  transform:translateY(-10px) rotateY(12deg) rotateX(6deg);
+  box-shadow:0 20px 50px rgba(0,255,255,.3);
+}
+#about p{color:#0ff;}
+.note{
+  max-width:900px;margin:0 auto;
+  background:rgba(0,255,255,.05);padding:25px;border-radius:14px;
+  color:#0ff;box-shadow:0 16px 40px rgba(0,255,255,.1);
+  text-align:left;white-space:pre-line;line-height:1.7;font-size:1.05rem;
+}
+.note .highlight{ color: var(--note-red); }
+.buttons{
+  display:flex;justify-content:center;gap:22px;margin-top:30px;
+  opacity:0;transform:translateY(20px);transition:all .6s ease;
+}
+.buttons.visible{opacity:1;transform:none;}
+.btn{
+  width:65px;height:65px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;text-decoration:none;font-size:1.4rem;
+  box-shadow:0 10px 26px rgba(0,255,255,.15);transition:all .25s;
+}
+.btn:hover{transform:scale(1.2) translateY(-5px);box-shadow:0 18px 40px rgba(0,255,255,.3);}
+.email{background:#D44638;}
+.phone{background:#25D366;}
+.instagram{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);}
+.telegram{background:#0088cc;}
+footer{
+  margin-top:40px;padding:20px;text-align:center;
+  background:linear-gradient(90deg,var(--blue1),var(--blue2));
+  color:#fff;border-radius:8px;
+  opacity:0;transform:translateY(20px);transition:all .6s ease;
+}
+footer.visible{opacity:1;transform:none;}
+@media(max-width:640px){
+  header h1{font-size:2.2rem;}
+  header p{font-size:1rem;}
+  .avatar-wrap{width:150px;height:150px;}
+  .card{width:94%;}
+}
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+<div id="splash">
+  <div class="sub">Welcome</div>
+</div>
+<header id="siteHeader" aria-hidden="true">
+  <h1>Dhananjay</h1>
+  <p>Empowering Change through Knowledge and Action</p>
+</header>
+
+<main id="main" aria-hidden="true">
+
+  <section id="about">
+    <div class="avatar-wrap">
+      <div class="flip-card">
+        <div class="flip-inner" id="flipInner">
+          <img class="front avatar" src="https://i.ibb.co/5h1kxh8D/cropped-circle-image-7.png" alt="Dhananjay - old">
+          <img class="back avatar" src="https://i.ibb.co/KpyhSwFn/cropped-circle-image-9-1.png" alt="Dhananjay - new">
+        </div>
+      </div>
+    </div>
+    <h2>About Me</h2>
+    <p style="max-width:820px;margin:0 auto;">
+      Hi! I'm Dhananjay, passionate about technology, education, and social reform. I strive to create impactful solutions that bridge gaps and foster inclusive growth.
+    </p>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="stack">
+      <div class="card"><i class="fas fa-project-diagram"></i>Architecting</div>
+      <div class="card"><i class="fab fa-html5"></i>HTML & CSS</div>
+      <div class="card"><i class="fas fa-robot"></i>AI Based Work</div>
+      <div class="card"><i class="fas fa-paint-brush"></i>Graphics Designer</div>
+      <div class="card">More...</div>
+    </div>
+
+    <div class="note" style="margin-top:40px;">
+      You can get any such work done by us.  
+      To get your work done, connect with us through any of the mediums given below. 👇🏼  
+      <br><br>
+      <strong class="highlight">Note:</strong> <span class="highlight">Your first task is completely free for everyone.</span>  
+      <br><span class="highlight">Thank You.</span>  
+      <hr style="margin:25px 0;border:1px dashed rgba(0,255,255,.3);">
+      आप हमसे ऐसा कोई भी काम करवा सकते हैं।  
+      <br>अपना काम करवाने के लिए, नीचे दिए गए किसी भी माध्यम से हमसे जुड़ें। 👇🏼  
+      <br><br>
+      <strong class="highlight">नोट:</strong> <span class="highlight">आपका पहला काम सभी के लिए पूरी तरह निःशुल्क है।</span>  
+      <br><span class="highlight">धन्यवाद।</span>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Completed Task</h2>
+    <div class="stack">
+      <div class="card">App building Ongoing ⏸️</div>
+      <div class="card">Website ✅</div>
+      <div class="card">Business card & logo ✅</div>
+      <div class="card">More…</div>
+    </div>
+  </section>
+
+  <section id="note">
+    <h2>Note</h2>
+    <div class="note">
+Whoever wants to move forward in the right direction in life and become a better person must learn and apply the (wwwH)-Rule in their daily life.  
+
+To learn this rule and understand how to apply it in your daily life, connect with us through any of the mediums given below 👇🏼  
+
+And believe me — this rule will truly bring a big change in your life.  
+
+Thank you.  
+(Dhananjay)
+
+---
+
+जो भी व्यक्ति अपने जीवन में सही दिशा में आगे बढ़ना चाहता है और एक बेहतर इंसान बनना चाहता है, उसे (wwwH)-नियम को जानना और अपने दैनिक जीवन में लागू करना ही होगा।  
+
+इस नियम को सीखने और इसे अपने दैनिक जीवन में कैसे लागू करना है, यह समझने के लिए नीचे दिए गए किसी भी माध्यम से हमसे जुड़ें 👇🏼  
+
+और यकीन मानिए — यह नियम आपके जीवन में सचमुच एक बड़ा बदलाव लाएगा।  
+
+धन्यवाद।  
+(धनंजय)
+    </div>
+  </section>
+
+  <div class="buttons">
+    <a class="btn email" href="mailto:iimmenseaiexperts@gmail.com"><i class="fas fa-envelope"></i></a>
+    <a class="btn phone" href="tel:+919219671761"><i class="fas fa-phone"></i></a>
+    <a class="btn instagram" href="https://www.instagram.com/cosmos_reformist" target=\"_blank\"><i class=\"fab fa-instagram\"></i></a>
+    <a class=\"btn telegram\" href=\"https://t.me/cytoaispecialist\" target=\"_blank\"><i class=\"fab fa-telegram-plane\"></i></a>
+  </div>
+
+  <footer>&copy; 2025 Dhananjay. All rights reserved.</footer>
+
+</main>
+
+<script>
+(function(){
+  const splash=document.getElementById('splash');
+  const header=document.getElementById('siteHeader');
+  const main=document.getElementById('main');
+  const sections=main.querySelectorAll('section');
+  const buttons=document.querySelector('.buttons');
+  const footer=document.querySelector('footer');
+  const flipInner = document.getElementById('flipInner');
+
+  window.addEventListener('load',()=>{
+    setTimeout(()=>{
+      splash.style.opacity='0';
+      setTimeout(()=>splash.remove(),500);
+      header.classList.add('visible'); header.removeAttribute('aria-hidden');
+      sections.forEach((s,i)=> setTimeout(()=>s.classList.add('visible'), i*150));
+      setTimeout(()=> buttons.classList.add('visible'), sections.length*150+150);
+      setTimeout(()=> footer.classList.add('visible'), sections.length*150+300);
+      main.removeAttribute('aria-hidden');
+
+      // Auto flip every 5 seconds
+      setInterval(()=>{
+        if(flipInner) flipInner.classList.toggle('flipped');
+      },5000);
+    },1500);
+  });
+
+  window.addEventListener('scroll',()=>{
+    const trigger = window.innerHeight*0.85;
+    sections.forEach(s=>{
+      if(!s.classList.contains('visible') && s.getBoundingClientRect().top<trigger)
+        s.classList.add('visible');
+    });
+  });
+})();
+const canvas=document.getElementById('particles');
+const ctx=canvas.getContext('2d');
+let W=canvas.width=window.innerWidth;
+let H=canvas.height=window.innerHeight;
+let particles=[];
+for(let i=0;i<100;i++){
+  particles.push({x:Math.random()*W, y:Math.random()*H, r:Math.random()*2+1, dx:(Math.random()-0.5)*0.7, dy:(Math.random()-0.5)*0.7});
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=\"rgba(0,255,255,0.6)\";
+    ctx.fill();
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>W)p.dx*=-1;
+    if(p.y<0||p.y>H)p.dy*=-1;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+window.addEventListener('resize',()=>{W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight;});
+</script>
+</body>
+</html>
